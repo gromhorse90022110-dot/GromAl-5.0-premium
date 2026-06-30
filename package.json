@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "build": "electron-builder"
+    "build": "electron-builder --win"
   },
   "dependencies": {},
   "devDependencies": {
@@ -22,14 +22,6 @@
     "win": {
       "target": "portable",
       "icon": "icon.ico",
-      "artifactName": "GromAI Premium.${ext}"
-    },
-    "mac": {
-      "target": "dmg",
-      "artifactName": "GromAI Premium.${ext}"
-    },
-    "linux": {
-      "target": "AppImage",
       "artifactName": "GromAI Premium.${ext}"
     }
   }
