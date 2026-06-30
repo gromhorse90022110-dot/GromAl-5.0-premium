@@ -1,47 +1,32 @@
-name: Release Tauri App
+name: Build Electron App
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
 
 jobs:
-  release:
-    permissions:
-      contents: write
+  build:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: 'npm'
 
-      - name: Install Rust stable
-        uses: dtolnay/rust-toolchain@stable
+    - name: Install dependencies
+      run: npm install
 
-      - name: Rust cache
-        uses: swatinem/rust-cache@v2
+    - name: Build Portable EXE
+      run: npm run build
 
-      - name: Install Tauri CLI
-        run: npm install -g @tauri-apps/cli
-
-      # ЭТА КОМАНДА ИСПРАВИТ СЛОМАННУЮ БИБЛИОТЕКУ:
-      - name: Fix Broken Dependencies
-        run: cargo update -p time --precise 0.3.36
-        working-directory: src-tauri
-
-      - name: Build Tauri App
-        uses: tauri-apps/tauri-action@v0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tagName: app-v__VERSION__
-          releaseName: "App v__VERSION__"
-          releaseBody: "Автоматический релиз сборки Tauri."
-          releaseDraft: true
-          prerelease: false
-          
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: GromAI-Windows-App
+        path: dist/*.exe
+        
