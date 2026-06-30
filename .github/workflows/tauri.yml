@@ -1,4 +1,4 @@
-name: Build Cross-Platform App
+name: Build Electron App
 
 on:
   push:
@@ -6,11 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
+    runs-on: windows-latest
 
     steps:
     - name: Checkout repository
@@ -24,22 +20,12 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    # ОТДЕЛЬНЫЕ ПРОСТЫЕ КОМАНДЫ ДЛЯ КАЖДОЙ СИСТЕМЫ:
-    - name: Build for Windows
-      if: matrix.os == 'windows-latest'
-      run: npm run build -- --win
-
-    - name: Build for Linux
-      if: matrix.os == 'ubuntu-latest'
-      run: npm run build -- --linux
-
-    - name: Build for macOS
-      if: matrix.os == 'macos-latest'
-      run: npm run build -- --mac
+    - name: Build Portable EXE
+      run: npm run build
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: GromAI-${{ matrix.os }}-App
-        path: dist/*.*
+        name: GromAI-Windows-App
+        path: dist/*.exe
         
