@@ -3,7 +3,7 @@ name: Release Tauri App
 on:
   push:
     branches:
-      - main # Сборка запускается при пуше в ветку main
+      - main
 
 jobs:
   release:
@@ -28,6 +28,11 @@ jobs:
 
       - name: Install Tauri CLI
         run: npm install -g @tauri-apps/cli
+
+      # ЭТА КОМАНДА ИСПРАВИТ СЛОМАННУЮ БИБЛИОТЕКУ:
+      - name: Fix Broken Dependencies
+        run: cargo update -p time --precise 0.3.36
+        working-directory: src-tauri
 
       - name: Build Tauri App
         uses: tauri-apps/tauri-action@v0
