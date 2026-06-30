@@ -20,7 +20,8 @@
       "src/**/*"
     ],
     "win": {
-      "target": "portable"
+      "target": "portable",
+      "icon": "icon.ico"
     }
   }
 }
