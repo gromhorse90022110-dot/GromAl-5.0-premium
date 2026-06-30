@@ -1,4 +1,7 @@
 {
+  "productName": "GromAI App",
+  "version": "1.0.0",
+  "identifier": "com.gromhorse.gromai",
   "build": {
     "beforeBuildCommand": "",
     "beforeDevCommand": "",
@@ -20,7 +23,7 @@
   },
   "bundle": {
     "active": true,
-    "targets": "all",
-    "identifier": "com.gromhorse.gromai"
+    "targets": "all"
   }
 }
+
