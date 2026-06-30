@@ -10,7 +10,6 @@ jobs:
 
     strategy:
       matrix:
-        # GitHub запустит три компьютера параллельно:
         os: [windows-latest, ubuntu-latest, macos-latest]
 
     steps:
@@ -25,17 +24,18 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Build App for OS
-      # Скрипт сам поймет, под какую ОС собирать в данный момент:
-      run: |
-        if [ "${{ matrix.os }}" = "windows-latest" ]; then
-          npm run build -- --win
-        elif [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
-          npm run build -- --linux
-        elif [ "${{ matrix.os }}" = "macos-latest" ]; then
-          npm run build -- --mac
-        fi
-      shell: bash
+    # ОТДЕЛЬНЫЕ ПРОСТЫЕ КОМАНДЫ ДЛЯ КАЖДОЙ СИСТЕМЫ:
+    - name: Build for Windows
+      if: matrix.os == 'windows-latest'
+      run: npm run build -- --win
+
+    - name: Build for Linux
+      if: matrix.os == 'ubuntu-latest'
+      run: npm run build -- --linux
+
+    - name: Build for macOS
+      if: matrix.os == 'macos-latest'
+      run: npm run build -- --mac
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
