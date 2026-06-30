@@ -26,12 +26,10 @@
     },
     "mac": {
       "target": "dmg",
-      "icon": "icon.ico",
       "artifactName": "GromAI Premium.${ext}"
     },
     "linux": {
       "target": "AppImage",
-      "icon": "icon.ico",
       "artifactName": "GromAI Premium.${ext}"
     }
   }
